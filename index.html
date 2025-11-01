@@ -1,3 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AnimeRat Test (Works on Android)</title>
+  <style>
+    body {
+      background: #0f0f0f;
+      color: #fff;
+      font-family: sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #ff77ff;
+    }
+    #anime-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .anime {
+      background: #1a1a1a;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 5px #ff77ff70;
+      transition: transform 0.2s;
+    }
+    .anime:hover {
+      transform: scale(1.05);
+    }
+    .anime img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+    .anime h3 {
+      font-size: 14px;
+      text-align: center;
+      margin: 10px;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <h1>AnimeRat – Working Jikan API Test</h1>
+  <div id="anime-list">Loading anime...</div>
+
+  <script>
+    const container = document.getElementById("anime-list");
+
+    async function loadAnime() {
+      container.innerHTML = "Fetching anime...";
+      try {
+        // ✅ Use proxy so it works on Android / Acode
+        const url = "https://api.allorigins.win/raw?url=" +
+          encodeURIComponent("https://api.jikan.moe/v4/top/anime?limit=10");
+
+        const res = await fetch(url);
+        const data = await res.json();
+
+        container.innerHTML = "";
+        data.data.forEach(anime => {
+          const card = document.createElement("div");
+          card.className = "anime";
+          card.innerHTML = `
+            <img src="${anime.images.jpg.image_url}" alt="${anime.title}">
+            <h3>${anime.title}</h3>
+          `;
+          container.appendChild(card);
+        });
+      } catch (err) {
+        console.error(err);
+        container.innerHTML = "Error loading anime 😞";
+      }
+    }
+
+    loadAnime();
+  </script>
+</body>
+</html> 
 <!doctype html>
 <html lang="en">
 <head>
