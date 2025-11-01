@@ -15,6 +15,7 @@
 /* ==========================
    CONFIG
    ========================== */
+const res = await fetch("https://api.allorigins.win/raw?url=https://api.jikan.moe/v4/top/anime?limit=12");
 const API_BASE = 'https://api.jikan.moe/v4';
 const CACHE_TTL_MS = 1000 * 60 * 30; // 30 minutes
 const PAGE_SIZE = 18; // items per fetch for feed
